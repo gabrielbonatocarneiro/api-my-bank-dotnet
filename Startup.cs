@@ -1,17 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using api_my_bank_dotnet.Entities;
+using api_my_bank_dotnet.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 namespace api_my_bank_dotnet
@@ -30,7 +23,8 @@ namespace api_my_bank_dotnet
     {
       string mySqlConnection = Configuration.GetConnectionString("DefaultConnection");
 
-      services.AddDbContext<AppDbContext>(options => options.UseMySql(mySqlConnection, ServerVersion.AutoDetect(mySqlConnection)));
+      services.AddDbContext<DataContext>(options => options.UseMySql(mySqlConnection, ServerVersion.AutoDetect(mySqlConnection)));
+      services.AddScoped<DataContext, DataContext>();
 
       services.AddControllers();
       services.AddSwaggerGen(c =>

@@ -3,74 +3,73 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using api_my_bank_dotnet.Entities;
+using api_my_bank_dotnet.Data;
 
 namespace api_my_bank_dotnet.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
-    [Migration("20220114113355_endereco")]
-    partial class endereco
+  [DbContext(typeof(DataContext))]
+  [Migration("20220114113355_endereco")]
+  partial class endereco
+  {
+    protected override void BuildTargetModel(ModelBuilder modelBuilder)
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
-        {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 64)
-                .HasAnnotation("ProductVersion", "5.0.13");
+      modelBuilder
+          .HasAnnotation("Relational:MaxIdentifierLength", 64)
+          .HasAnnotation("ProductVersion", "5.0.13");
 
-            modelBuilder.Entity("api_my_bank_dotnet.Entities.Endereco", b =>
-                {
-                    b.Property<ulong>("endereco_id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint unsigned");
+      modelBuilder.Entity("api_my_bank_dotnet.Entities.Endereco", b =>
+          {
+            b.Property<ulong>("endereco_id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("bigint unsigned");
 
-                    b.Property<string>("bairro")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+            b.Property<string>("bairro")
+                      .IsRequired()
+                      .HasMaxLength(255)
+                      .HasColumnType("varchar(255)");
 
-                    b.Property<string>("cep")
-                        .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("varchar(8)");
+            b.Property<string>("cep")
+                      .IsRequired()
+                      .HasMaxLength(8)
+                      .HasColumnType("varchar(8)");
 
-                    b.Property<string>("cidade")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+            b.Property<string>("cidade")
+                      .IsRequired()
+                      .HasMaxLength(255)
+                      .HasColumnType("varchar(255)");
 
-                    b.Property<string>("complemento")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+            b.Property<string>("complemento")
+                      .IsRequired()
+                      .HasMaxLength(255)
+                      .HasColumnType("varchar(255)");
 
-                    b.Property<DateTime>("created_at")
-                        .HasColumnType("datetime");
+            b.Property<DateTime>("created_at")
+                      .HasColumnType("datetime");
 
-                    b.Property<string>("logradouro")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+            b.Property<string>("logradouro")
+                      .IsRequired()
+                      .HasMaxLength(255)
+                      .HasColumnType("varchar(255)");
 
-                    b.Property<string>("numero")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
+            b.Property<string>("numero")
+                      .IsRequired()
+                      .HasMaxLength(20)
+                      .HasColumnType("varchar(20)");
 
-                    b.Property<string>("uf")
-                        .IsRequired()
-                        .HasMaxLength(2)
-                        .HasColumnType("varchar(2)");
+            b.Property<string>("uf")
+                      .IsRequired()
+                      .HasMaxLength(2)
+                      .HasColumnType("varchar(2)");
 
-                    b.Property<DateTime>("updated_at")
-                        .HasColumnType("datetime");
+            b.Property<DateTime>("updated_at")
+                      .HasColumnType("datetime");
 
-                    b.HasKey("endereco_id");
+            b.HasKey("endereco_id");
 
-                    b.ToTable("endereco");
-                });
+            b.ToTable("endereco");
+          });
 #pragma warning restore 612, 618
-        }
     }
+  }
 }

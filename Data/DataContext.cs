@@ -1,17 +1,20 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using api_my_bank_dotnet.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace api_my_bank_dotnet.Entities
+namespace api_my_bank_dotnet.Data
 {
-  public class AppDbContext : DbContext
+  public class DataContext : DbContext
   {
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+    public DataContext(DbContextOptions<DataContext> options) : base(options)
     {
     }
 
     public DbSet<Endereco> Endereco { get; set; }
 
-    //public DbSet<Usuario> Usuario { get; set; }
+    public DbSet<Usuario> Usuario { get; set; }
+
+    public DbSet<ContaBancaria> ContaBancaria { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -141,14 +144,45 @@ namespace api_my_bank_dotnet.Entities
         .IsRequired();
 
       modelBuilder.Entity<Usuario>()
+        .Property(u => u.login)
+        .HasMaxLength(15)
+        .IsRequired();
+
+      modelBuilder.Entity<Usuario>()
+       .HasIndex(c => c.login)
+       .IsUnique();
+
+      modelBuilder.Entity<Usuario>()
+        .Property(u => u.email)
+        .HasMaxLength(100)
+        .IsRequired();
+
+      modelBuilder.Entity<Usuario>()
+       .HasIndex(u => u.email)
+       .IsUnique();
+
+      modelBuilder.Entity<Usuario>()
+       .Property(u => u.senha)
+       .HasMaxLength(20)
+       .IsRequired();
+
+      modelBuilder.Entity<Usuario>()
         .Property(u => u.rg)
         .HasMaxLength(9)
         .IsRequired();
 
       modelBuilder.Entity<Usuario>()
+        .HasIndex(u => u.rg)
+        .IsUnique();
+
+      modelBuilder.Entity<Usuario>()
         .Property(u => u.cpf)
         .HasMaxLength(11)
         .IsRequired();
+
+      modelBuilder.Entity<Usuario>()
+        .HasIndex(u => u.cpf)
+        .IsUnique();
 
       modelBuilder.Entity<Usuario>()
         .Property(u => u.idade)

@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using api_my_bank_dotnet.Entities;
+using api_my_bank_dotnet.Data;
 
 namespace api_my_bank_dotnet.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
-    [Migration("20220114120717_usuario")]
+    [DbContext(typeof(DataContext))]
+    [Migration("20220114141043_usuario")]
     partial class usuario
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -119,6 +119,11 @@ namespace api_my_bank_dotnet.Migrations
                     b.Property<DateTime>("data_nascimento")
                         .HasColumnType("date");
 
+                    b.Property<string>("email")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
                     b.Property<ulong>("endereco_id")
                         .HasColumnType("bigint unsigned");
 
@@ -129,6 +134,11 @@ namespace api_my_bank_dotnet.Migrations
 
                     b.Property<int>("idade")
                         .HasColumnType("int");
+
+                    b.Property<string>("login")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("varchar(15)");
 
                     b.Property<string>("nome_completo")
                         .IsRequired()
@@ -143,6 +153,11 @@ namespace api_my_bank_dotnet.Migrations
                         .HasMaxLength(9)
                         .HasColumnType("varchar(9)");
 
+                    b.Property<string>("senha")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
                     b.Property<string>("sexo")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -156,7 +171,19 @@ namespace api_my_bank_dotnet.Migrations
                     b.HasIndex("conta_bancaria_id")
                         .IsUnique();
 
+                    b.HasIndex("cpf")
+                        .IsUnique();
+
+                    b.HasIndex("email")
+                        .IsUnique();
+
                     b.HasIndex("endereco_id")
+                        .IsUnique();
+
+                    b.HasIndex("login")
+                        .IsUnique();
+
+                    b.HasIndex("rg")
                         .IsUnique();
 
                     b.ToTable("usuario");

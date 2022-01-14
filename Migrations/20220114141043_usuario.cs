@@ -20,6 +20,12 @@ namespace api_my_bank_dotnet.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     apelido = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    login = table.Column<string>(type: "varchar(15)", maxLength: 15, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    email = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    senha = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     rg = table.Column<string>(type: "varchar(9)", maxLength: 9, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     cpf = table.Column<string>(type: "varchar(11)", maxLength: 11, nullable: false)
@@ -59,9 +65,33 @@ namespace api_my_bank_dotnet.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_usuario_cpf",
+                table: "usuario",
+                column: "cpf",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_usuario_email",
+                table: "usuario",
+                column: "email",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_usuario_endereco_id",
                 table: "usuario",
                 column: "endereco_id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_usuario_login",
+                table: "usuario",
+                column: "login",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_usuario_rg",
+                table: "usuario",
+                column: "rg",
                 unique: true);
         }
 

@@ -14,6 +14,12 @@ namespace api_my_bank_dotnet.Entities
 
     public string apelido { get; set; }
 
+    public string login { get; set; }
+
+    public string email { get; set; }
+
+    public string senha { get; set; }
+
     public string rg { get; set; }
 
     public string cpf { get; set; }

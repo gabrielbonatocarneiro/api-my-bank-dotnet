@@ -3,11 +3,11 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using api_my_bank_dotnet.Entities;
+using api_my_bank_dotnet.Data;
 
 namespace api_my_bank_dotnet.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(DataContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -117,6 +117,11 @@ namespace api_my_bank_dotnet.Migrations
                     b.Property<DateTime>("data_nascimento")
                         .HasColumnType("date");
 
+                    b.Property<string>("email")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
                     b.Property<ulong>("endereco_id")
                         .HasColumnType("bigint unsigned");
 
@@ -127,6 +132,11 @@ namespace api_my_bank_dotnet.Migrations
 
                     b.Property<int>("idade")
                         .HasColumnType("int");
+
+                    b.Property<string>("login")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("varchar(15)");
 
                     b.Property<string>("nome_completo")
                         .IsRequired()
@@ -141,6 +151,11 @@ namespace api_my_bank_dotnet.Migrations
                         .HasMaxLength(9)
                         .HasColumnType("varchar(9)");
 
+                    b.Property<string>("senha")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
                     b.Property<string>("sexo")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -154,7 +169,19 @@ namespace api_my_bank_dotnet.Migrations
                     b.HasIndex("conta_bancaria_id")
                         .IsUnique();
 
+                    b.HasIndex("cpf")
+                        .IsUnique();
+
+                    b.HasIndex("email")
+                        .IsUnique();
+
                     b.HasIndex("endereco_id")
+                        .IsUnique();
+
+                    b.HasIndex("login")
+                        .IsUnique();
+
+                    b.HasIndex("rg")
                         .IsUnique();
 
                     b.ToTable("usuario");
