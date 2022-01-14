@@ -71,6 +71,34 @@ namespace api_my_bank_dotnet.Entities
         .HasColumnType("datetime")
         .IsRequired();
 
+      // Conta Bancária
+      modelBuilder.Entity<ContaBancaria>()
+        .ToTable("conta_bancaria");
+
+      modelBuilder.Entity<ContaBancaria>()
+        .HasKey(c => c.conta_bancaria_id);
+
+      modelBuilder.Entity<ContaBancaria>()
+        .Property(c => c.conta_bancaria_id)
+        .ValueGeneratedOnAdd();
+
+      modelBuilder.Entity<ContaBancaria>()
+        .Property(c => c.num_agencia)
+        .IsRequired();
+
+      modelBuilder.Entity<ContaBancaria>()
+        .Property(c => c.num_conta_corrente)
+        .IsRequired();
+
+      modelBuilder.Entity<ContaBancaria>()
+        .HasIndex(c => c.num_conta_corrente)
+        .IsUnique();
+
+      modelBuilder.Entity<ContaBancaria>()
+        .Property(c => c.created_at)
+        .HasColumnType("datetime")
+        .IsRequired();
+
       /*
       // Usuário
       modelBuilder.Entity<Usuario>()
