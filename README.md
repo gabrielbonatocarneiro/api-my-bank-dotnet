@@ -6,6 +6,19 @@ dotnet run
 F5
 ```
 
+### Migrations
+```bash
+# Criar migration
+dotnet ef migrations add <nome>
+
+# Rodar as migration
+dotnet ef database update
+
+# Rollback
+dotnet ef database update 0
+dotnet ef migrations remove
+```
+
 #### Comandos executados para criar e atualizar o Projeto durante o desenvolemento
 ```bash
 # Criar o projeto

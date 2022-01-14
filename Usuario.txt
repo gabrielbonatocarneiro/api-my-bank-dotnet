@@ -1,0 +1,37 @@
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.Numerics;
+
+namespace api_my_bank_dotnet.Entities
+{
+  public class Usuario
+  {
+    public BigInteger usuario_id { get; set; }
+
+    public BigInteger? endereco_id { get; set; }
+
+    public string nome_completo { get; set; }
+
+    public string apelido { get; set; }
+
+    public string rg { get; set; }
+
+    public string cpf { get; set; }
+
+    public int idade { get; set; }
+
+    public string sexo { get; set; }
+
+    public string estado_civil { get; set; }
+
+    public DateTime data_nascimento { get; set; }
+
+    public decimal renda_mensal { get; set; }
+
+    public DateTime created_at { get; set; }
+
+    public DateTime updated_at { get; set; }
+
+    public Endereco endereco { get; set; }
+  }
+}
