@@ -1,4 +1,6 @@
 using api_my_bank_dotnet.Data;
+using api_my_bank_dotnet.Repositories;
+using api_my_bank_dotnet.RepositoryInterfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +29,7 @@ namespace api_my_bank_dotnet
       services.AddScoped<DataContext, DataContext>();
 
       services.AddControllers();
+
       services.AddSwaggerGen(c =>
       {
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "My Bank", Version = "v1" });
@@ -39,8 +42,6 @@ namespace api_my_bank_dotnet
       if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
-        app.UseSwagger();
-        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "api_my_bank_dotnet v1"));
       }
 
       app.UseHttpsRedirection();
@@ -52,6 +53,13 @@ namespace api_my_bank_dotnet
       app.UseEndpoints(endpoints =>
       {
         endpoints.MapControllers();
+      });
+
+      app.UseSwagger();
+      app.UseSwaggerUI(c =>
+      {
+        c.RoutePrefix = string.Empty;
+        c.SwaggerEndpoint("swagger/v1/swagger.json", "v1");
       });
     }
   }
