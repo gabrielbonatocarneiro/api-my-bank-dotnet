@@ -1,14 +1,14 @@
 using System;
-using System.ComponentModel.DataAnnotations;
-using System.Numerics;
 
 namespace api_my_bank_dotnet.Entities
 {
   public class Usuario
   {
-    public BigInteger usuario_id { get; set; }
+    public UInt64 usuario_id { get; set; }
 
-    public BigInteger? endereco_id { get; set; }
+    public UInt64 endereco_id { get; set; }
+
+    public UInt64 conta_bancaria_id { get; set; }
 
     public string nome_completo { get; set; }
 
@@ -24,14 +24,16 @@ namespace api_my_bank_dotnet.Entities
 
     public string estado_civil { get; set; }
 
-    public DateTime data_nascimento { get; set; }
+    public UInt64 renda_mensal { get; set; }
 
-    public decimal renda_mensal { get; set; }
+    public DateTime data_nascimento { get; set; }
 
     public DateTime created_at { get; set; }
 
     public DateTime updated_at { get; set; }
 
     public Endereco endereco { get; set; }
+
+    public ContaBancaria contaBancaria { get; set; }
   }
 }

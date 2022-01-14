@@ -12,6 +12,6 @@ namespace api_my_bank_dotnet.Entities
 
     public DateTime created_at { get; set; }
 
-    //public Usuario usuario { get; set; }
+    public Usuario usuario { get; set; }
   }
 }

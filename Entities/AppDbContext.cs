@@ -99,7 +99,6 @@ namespace api_my_bank_dotnet.Entities
         .HasColumnType("datetime")
         .IsRequired();
 
-      /*
       // Usuário
       modelBuilder.Entity<Usuario>()
         .ToTable("usuario");
@@ -107,11 +106,28 @@ namespace api_my_bank_dotnet.Entities
       modelBuilder.Entity<Usuario>()
         .HasKey(u => u.usuario_id);
 
-      // Entity Framework não tem o on update da fk
+      modelBuilder.Entity<Usuario>()
+        .Property(c => c.usuario_id)
+        .ValueGeneratedOnAdd();
+
+      /*
+        Entity Framework não tem o on update da fk
+        FK de endereco_id
+      */
       modelBuilder.Entity<Endereco>()
         .HasOne(e => e.usuario)
         .WithOne(u => u.endereco)
         .HasForeignKey<Usuario>(u => u.endereco_id)
+        .OnDelete(DeleteBehavior.Cascade);
+
+      /*
+        Entity Framework não tem o on update da fk
+        FK de conta_bancaria_id
+      */
+      modelBuilder.Entity<ContaBancaria>()
+        .HasOne(c => c.usuario)
+        .WithOne(u => u.contaBancaria)
+        .HasForeignKey<Usuario>(u => u.conta_bancaria_id)
         .OnDelete(DeleteBehavior.Cascade);
 
       modelBuilder.Entity<Usuario>()
@@ -149,13 +165,12 @@ namespace api_my_bank_dotnet.Entities
         .IsRequired();
 
       modelBuilder.Entity<Usuario>()
-        .Property(u => u.data_nascimento)
-        .HasColumnType("date")
+        .Property(u => u.renda_mensal)
         .IsRequired();
 
       modelBuilder.Entity<Usuario>()
-        .Property(u => u.renda_mensal)
-        .HasColumnType("bigint")
+        .Property(u => u.data_nascimento)
+        .HasColumnType("date")
         .IsRequired();
 
       modelBuilder.Entity<Usuario>()
@@ -167,7 +182,6 @@ namespace api_my_bank_dotnet.Entities
         .Property(e => e.updated_at)
         .HasColumnType("datetime")
         .IsRequired();
-      */
     }
   }
 }
