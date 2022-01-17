@@ -48,8 +48,6 @@ namespace api_my_bank_dotnet.Migrations
           civil_status = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
             .Annotation("MySql:CharSet", "utf8mb4"),
 
-          monthly_income = table.Column<ulong>(type: "bigint unsigned", nullable: false),
-
           birth_date = table.Column<DateTime>(type: "date", nullable: false),
 
           created_at = table.Column<DateTime>(type: "datetime", nullable: false),

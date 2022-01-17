@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using api_my_bank_dotnet.Common;
 using api_my_bank_dotnet.Data;
-using api_my_bank_dotnet.Dtos;
+using api_my_bank_dotnet.Dtos.User;
 using api_my_bank_dotnet.Entities;
 using api_my_bank_dotnet.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -67,6 +67,8 @@ namespace api_my_bank_dotnet.Repositories
       {
         branch_number = 1,
         account_number = await GenerateBankAccountNumber(),
+        currency = userDto.infoCurrency.currency,
+        monthly_income = userDto.infoCurrency.monthly_income,
         created_at = date
       };
       await _context.BankAccount.AddAsync(bankAccount);
@@ -85,7 +87,6 @@ namespace api_my_bank_dotnet.Repositories
         age = userDto.age,
         gender = userDto.gender,
         civil_status = userDto.civil_status,
-        monthly_income = userDto.monthly_income,
         birth_date = userDto.birth_date,
         created_at = date,
         updated_at = date
@@ -153,11 +154,18 @@ namespace api_my_bank_dotnet.Repositories
       user.age = userDto.age;
       user.gender = userDto.gender;
       user.civil_status = userDto.civil_status;
-      user.monthly_income = userDto.monthly_income;
       user.birth_date = userDto.birth_date;
       user.updated_at = date;
 
       _context.User.Update(user);
+      await _context.SaveChangesAsync();
+
+      var bankAccount = await _context.BankAccount.Where(ba => ba.bank_account_id == user.bank_account_id).FirstOrDefaultAsync();
+
+      bankAccount.currency = userDto.infoCurrency.currency;
+      bankAccount.monthly_income = userDto.infoCurrency.monthly_income;
+
+      _context.BankAccount.Update(bankAccount);
       await _context.SaveChangesAsync();
     }
 

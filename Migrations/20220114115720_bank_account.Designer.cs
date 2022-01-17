@@ -30,6 +30,14 @@ namespace api_my_bank_dotnet.Migrations
         b.Property<ulong>("account_number")
           .HasColumnType("bigint unsigned");
 
+        b.Property<string>("currency")
+          .IsRequired()
+          .HasMaxLength(20)
+          .HasColumnType("varchar(20)");
+
+        b.Property<ulong>("monthly_income")
+          .HasColumnType("bigint unsigned");
+
         b.Property<DateTime>("created_at")
           .HasColumnType("datetime");
 

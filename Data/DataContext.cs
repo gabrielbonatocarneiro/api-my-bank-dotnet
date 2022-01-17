@@ -98,6 +98,15 @@ namespace api_my_bank_dotnet.Data
         .IsUnique();
 
       modelBuilder.Entity<BankAccount>()
+        .Property(ba => ba.currency)
+        .HasMaxLength(20)
+        .IsRequired();
+
+      modelBuilder.Entity<BankAccount>()
+        .Property(ba => ba.monthly_income)
+        .IsRequired();
+
+      modelBuilder.Entity<BankAccount>()
         .Property(ba => ba.created_at)
         .HasColumnType("datetime")
         .IsRequired();
@@ -187,10 +196,6 @@ namespace api_my_bank_dotnet.Data
       modelBuilder.Entity<User>()
         .Property(u => u.civil_status)
         .HasMaxLength(20)
-        .IsRequired();
-
-      modelBuilder.Entity<User>()
-        .Property(u => u.monthly_income)
         .IsRequired();
 
       modelBuilder.Entity<User>()

@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace api_my_bank_dotnet.Dtos
+namespace api_my_bank_dotnet.Dtos.User
 {
   public class UpdateUserDto
   {
@@ -46,11 +46,14 @@ namespace api_my_bank_dotnet.Dtos
 
     [Required]
     [Range(1, int.MaxValue)]
-    public UInt64 monthly_income { get; set; }
+    public ulong monthly_income { get; set; }
 
     [Required]
     [DataType(DataType.Date)]
     public DateTime birth_date { get; set; }
+
+    [Required]
+    public InfoCurrencyDto infoCurrency { get; set; }
 
     [Required]
     public UpdateUserAddressDto address { get; set; }

@@ -1,15 +1,15 @@
 using System;
 using api_my_bank_dotnet.Entities;
 
-namespace api_my_bank_dotnet.Dtos
+namespace api_my_bank_dotnet.Dtos.User
 {
   public class UserDto
   {
-    public UInt64 user_id { get; set; }
+    public ulong user_id { get; set; }
 
-    public UInt64 address_id { get; set; }
+    public ulong address_id { get; set; }
 
-    public UInt64 bank_account_id { get; set; }
+    public ulong bank_account_id { get; set; }
 
     public string full_name { get; set; }
 
@@ -27,7 +27,7 @@ namespace api_my_bank_dotnet.Dtos
 
     public string civil_status { get; set; }
 
-    public UInt64 monthly_income { get; set; }
+    public ulong monthly_income { get; set; }
 
     public DateTime birth_date { get; set; }
 

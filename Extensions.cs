@@ -1,4 +1,4 @@
-using api_my_bank_dotnet.Dtos;
+using api_my_bank_dotnet.Dtos.User;
 using api_my_bank_dotnet.Entities;
 
 namespace api_my_bank_dotnet
@@ -20,7 +20,6 @@ namespace api_my_bank_dotnet
         age = user.age,
         gender = user.gender,
         civil_status = user.civil_status,
-        monthly_income = user.monthly_income,
         birth_date = user.birth_date,
         created_at = user.created_at,
         updated_at = user.updated_at,
@@ -42,6 +41,8 @@ namespace api_my_bank_dotnet
           bank_account_id = user.bankAccount.bank_account_id,
           branch_number = user.bankAccount.branch_number,
           account_number = user.bankAccount.account_number,
+          currency = user.bankAccount.currency,
+          monthly_income = user.bankAccount.monthly_income,
           created_at = user.bankAccount.created_at
         }
       };

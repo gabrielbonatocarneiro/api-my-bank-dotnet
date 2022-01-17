@@ -4,11 +4,11 @@ namespace api_my_bank_dotnet.Entities
 {
   public class User
   {
-    public UInt64 user_id { get; set; }
+    public ulong user_id { get; set; }
 
-    public UInt64 address_id { get; set; }
+    public ulong address_id { get; set; }
 
-    public UInt64 bank_account_id { get; set; }
+    public ulong bank_account_id { get; set; }
 
     public string full_name { get; set; }
 
@@ -27,8 +27,6 @@ namespace api_my_bank_dotnet.Entities
     public string gender { get; set; }
 
     public string civil_status { get; set; }
-
-    public UInt64 monthly_income { get; set; }
 
     public DateTime birth_date { get; set; }
 

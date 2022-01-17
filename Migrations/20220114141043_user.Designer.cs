@@ -74,9 +74,6 @@ namespace api_my_bank_dotnet.Migrations
           .HasMaxLength(20)
           .HasColumnType("varchar(20)");
 
-        b.Property<ulong>("monthly_income")
-          .HasColumnType("bigint unsigned");
-
         b.Property<DateTime>("birth_date")
           .HasColumnType("date");
 

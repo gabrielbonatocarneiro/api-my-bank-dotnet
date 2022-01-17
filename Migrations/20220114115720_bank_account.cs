@@ -22,6 +22,11 @@ namespace api_my_bank_dotnet.Migrations
 
           account_number = table.Column<ulong>(type: "bigint unsigned", nullable: false),
 
+          currency = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
+            .Annotation("MySql:CharSet", "utf8mb4"),
+
+          monthly_income = table.Column<ulong>(type: "bigint unsigned", nullable: false),
+
           created_at = table.Column<DateTime>(type: "datetime", nullable: false)
         },
         constraints: table =>

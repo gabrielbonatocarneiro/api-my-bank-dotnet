@@ -4,7 +4,7 @@ namespace api_my_bank_dotnet.Entities
 {
   public class Address
   {
-    public UInt64 address_id { get; set; }
+    public ulong address_id { get; set; }
 
     public string address_name { get; set; }
 

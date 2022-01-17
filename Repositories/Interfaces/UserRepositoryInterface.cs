@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using api_my_bank_dotnet.Dtos;
+using api_my_bank_dotnet.Dtos.User;
 using api_my_bank_dotnet.Entities;
 
 namespace api_my_bank_dotnet.Repositories.Interfaces
