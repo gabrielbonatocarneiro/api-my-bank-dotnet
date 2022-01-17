@@ -8,8 +8,8 @@ using api_my_bank_dotnet.Data;
 namespace api_my_bank_dotnet.Migrations
 {
   [DbContext(typeof(DataContext))]
-  [Migration("20220114113355_endereco")]
-  partial class endereco
+  [Migration("20220114113355_address")]
+  partial class address
   {
     protected override void BuildTargetModel(ModelBuilder modelBuilder)
     {
@@ -18,28 +18,43 @@ namespace api_my_bank_dotnet.Migrations
         .HasAnnotation("Relational:MaxIdentifierLength", 64)
         .HasAnnotation("ProductVersion", "5.0.13");
 
-      modelBuilder.Entity("api_my_bank_dotnet.Entities.Endereco", b =>
+      modelBuilder.Entity("api_my_bank_dotnet.Entities.Address", b =>
       {
-        b.Property<ulong>("endereco_id")
+        b.Property<ulong>("address_id")
           .ValueGeneratedOnAdd()
           .HasColumnType("bigint unsigned");
 
-        b.Property<string>("bairro")
+        b.Property<string>("address_name")
           .IsRequired()
           .HasMaxLength(255)
           .HasColumnType("varchar(255)");
 
-        b.Property<string>("cep")
+        b.Property<string>("number")
           .IsRequired()
-          .HasMaxLength(8)
-          .HasColumnType("varchar(8)");
+          .HasMaxLength(20)
+          .HasColumnType("varchar(20)");
 
-        b.Property<string>("cidade")
+        b.Property<string>("complement")
           .IsRequired()
           .HasMaxLength(255)
           .HasColumnType("varchar(255)");
 
-        b.Property<string>("complemento")
+        b.Property<string>("district")
+          .IsRequired()
+          .HasMaxLength(255)
+          .HasColumnType("varchar(255)");
+
+        b.Property<string>("city")
+          .IsRequired()
+          .HasMaxLength(255)
+          .HasColumnType("varchar(255)");
+
+        b.Property<string>("state")
+          .IsRequired()
+          .HasMaxLength(255)
+          .HasColumnType("varchar(255)");
+
+        b.Property<string>("country")
           .IsRequired()
           .HasMaxLength(255)
           .HasColumnType("varchar(255)");
@@ -47,27 +62,12 @@ namespace api_my_bank_dotnet.Migrations
         b.Property<DateTime>("created_at")
           .HasColumnType("datetime");
 
-        b.Property<string>("logradouro")
-          .IsRequired()
-          .HasMaxLength(255)
-          .HasColumnType("varchar(255)");
-
-        b.Property<string>("numero")
-          .IsRequired()
-          .HasMaxLength(20)
-          .HasColumnType("varchar(20)");
-
-        b.Property<string>("uf")
-          .IsRequired()
-          .HasMaxLength(2)
-          .HasColumnType("varchar(2)");
-
         b.Property<DateTime>("updated_at")
           .HasColumnType("datetime");
 
-        b.HasKey("endereco_id");
+        b.HasKey("address_id");
 
-        b.ToTable("endereco");
+        b.ToTable("address");
       });
 #pragma warning restore 612, 618
     }

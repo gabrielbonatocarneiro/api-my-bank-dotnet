@@ -8,8 +8,8 @@ using api_my_bank_dotnet.Data;
 namespace api_my_bank_dotnet.Migrations
 {
   [DbContext(typeof(DataContext))]
-  [Migration("20220114115720_conta_bancaria")]
-  partial class conta_bancaria
+  [Migration("20220114115720_bank_account")]
+  partial class bank_account
   {
     protected override void BuildTargetModel(ModelBuilder modelBuilder)
     {
@@ -18,27 +18,27 @@ namespace api_my_bank_dotnet.Migrations
         .HasAnnotation("Relational:MaxIdentifierLength", 64)
         .HasAnnotation("ProductVersion", "5.0.13");
 
-      modelBuilder.Entity("api_my_bank_dotnet.Entities.ContaBancaria", b =>
+      modelBuilder.Entity("api_my_bank_dotnet.Entities.BankAccount", b =>
       {
-        b.Property<ulong>("conta_bancaria_id")
+        b.Property<ulong>("bank_account_id")
           .ValueGeneratedOnAdd()
+          .HasColumnType("bigint unsigned");
+
+        b.Property<uint>("branch_number")
+          .HasColumnType("int unsigned");
+
+        b.Property<ulong>("account_number")
           .HasColumnType("bigint unsigned");
 
         b.Property<DateTime>("created_at")
           .HasColumnType("datetime");
 
-        b.Property<uint>("num_agencia")
-          .HasColumnType("int unsigned");
+        b.HasKey("bank_account_id");
 
-        b.Property<ulong>("num_conta_corrente")
-          .HasColumnType("bigint unsigned");
-
-        b.HasKey("conta_bancaria_id");
-
-        b.HasIndex("num_conta_corrente")
+        b.HasIndex("account_number")
           .IsUnique();
 
-        b.ToTable("conta_bancaria");
+        b.ToTable("bank_account");
       });
 #pragma warning restore 612, 618
     }

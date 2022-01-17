@@ -1,6 +1,4 @@
 using api_my_bank_dotnet.Data;
-using api_my_bank_dotnet.Repositories;
-using api_my_bank_dotnet.RepositoryInterfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +27,10 @@ namespace api_my_bank_dotnet
       services.AddScoped<DataContext, DataContext>();
 
       services.AddControllers();
+
+      services.AddControllersWithViews().AddNewtonsoftJson(options =>
+        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+      );
 
       services.AddSwaggerGen(c =>
       {

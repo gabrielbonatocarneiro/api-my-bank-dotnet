@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace api_my_bank_dotnet.Migrations
 {
-  public partial class conta_bancaria : Migration
+  public partial class bank_account : Migration
   {
     protected override void Up(MigrationBuilder migrationBuilder)
     {
@@ -12,35 +12,35 @@ namespace api_my_bank_dotnet.Migrations
         .Annotation("MySql:CharSet", "utf8mb4");
 
       migrationBuilder.CreateTable(
-        name: "conta_bancaria",
+        name: "bank_account",
         columns: table => new
         {
-          conta_bancaria_id = table.Column<ulong>(type: "bigint unsigned", nullable: false)
+          bank_account_id = table.Column<ulong>(type: "bigint unsigned", nullable: false)
             .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
 
-          num_agencia = table.Column<uint>(type: "int unsigned", nullable: false),
+          branch_number = table.Column<uint>(type: "int unsigned", nullable: false),
 
-          num_conta_corrente = table.Column<ulong>(type: "bigint unsigned", nullable: false),
+          account_number = table.Column<ulong>(type: "bigint unsigned", nullable: false),
 
           created_at = table.Column<DateTime>(type: "datetime", nullable: false)
         },
         constraints: table =>
         {
-          table.PrimaryKey("PK_conta_bancaria", x => x.conta_bancaria_id);
+          table.PrimaryKey("PK_bank_account", x => x.bank_account_id);
         })
       .Annotation("MySql:CharSet", "utf8mb4");
 
       migrationBuilder.CreateIndex(
-        name: "IX_conta_bancaria_num_conta_corrente",
-        table: "conta_bancaria",
-        column: "num_conta_corrente",
+        name: "IX_bank_account_account_number",
+        table: "bank_account",
+        column: "account_number",
         unique: true);
     }
 
     protected override void Down(MigrationBuilder migrationBuilder)
     {
       migrationBuilder.DropTable(
-        name: "conta_bancaria");
+        name: "bank_account");
     }
   }
 }

@@ -17,51 +17,28 @@ namespace api_my_bank_dotnet.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64)
                 .HasAnnotation("ProductVersion", "5.0.13");
 
-            modelBuilder.Entity("api_my_bank_dotnet.Entities.ContaBancaria", b =>
+            modelBuilder.Entity("api_my_bank_dotnet.Entities.Address", b =>
                 {
-                    b.Property<ulong>("conta_bancaria_id")
+                    b.Property<ulong>("address_id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint unsigned");
 
-                    b.Property<DateTime>("created_at")
-                        .HasColumnType("datetime");
-
-                    b.Property<uint>("num_agencia")
-                        .HasColumnType("int unsigned");
-
-                    b.Property<ulong>("num_conta_corrente")
-                        .HasColumnType("bigint unsigned");
-
-                    b.HasKey("conta_bancaria_id");
-
-                    b.HasIndex("num_conta_corrente")
-                        .IsUnique();
-
-                    b.ToTable("conta_bancaria");
-                });
-
-            modelBuilder.Entity("api_my_bank_dotnet.Entities.Endereco", b =>
-                {
-                    b.Property<ulong>("endereco_id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint unsigned");
-
-                    b.Property<string>("bairro")
+                    b.Property<string>("address_name")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<string>("cep")
-                        .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("varchar(8)");
-
-                    b.Property<string>("cidade")
+                    b.Property<string>("city")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<string>("complemento")
+                    b.Property<string>("complement")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("country")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
@@ -69,94 +46,112 @@ namespace api_my_bank_dotnet.Migrations
                     b.Property<DateTime>("created_at")
                         .HasColumnType("datetime");
 
-                    b.Property<string>("logradouro")
+                    b.Property<string>("district")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<string>("numero")
+                    b.Property<string>("number")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
 
-                    b.Property<string>("uf")
+                    b.Property<string>("state")
                         .IsRequired()
-                        .HasMaxLength(2)
-                        .HasColumnType("varchar(2)");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
 
                     b.Property<DateTime>("updated_at")
                         .HasColumnType("datetime");
 
-                    b.HasKey("endereco_id");
+                    b.HasKey("address_id");
 
-                    b.ToTable("endereco");
+                    b.ToTable("address");
                 });
 
-            modelBuilder.Entity("api_my_bank_dotnet.Entities.Usuario", b =>
+            modelBuilder.Entity("api_my_bank_dotnet.Entities.BankAccount", b =>
                 {
-                    b.Property<ulong>("usuario_id")
+                    b.Property<ulong>("bank_account_id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint unsigned");
 
-                    b.Property<string>("apelido")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<ulong>("conta_bancaria_id")
+                    b.Property<ulong>("account_number")
                         .HasColumnType("bigint unsigned");
 
-                    b.Property<string>("cpf")
-                        .IsRequired()
-                        .HasMaxLength(11)
-                        .HasColumnType("varchar(11)");
+                    b.Property<uint>("branch_number")
+                        .HasColumnType("int unsigned");
 
                     b.Property<DateTime>("created_at")
                         .HasColumnType("datetime");
 
-                    b.Property<DateTime>("data_nascimento")
+                    b.HasKey("bank_account_id");
+
+                    b.HasIndex("account_number")
+                        .IsUnique();
+
+                    b.ToTable("bank_account");
+                });
+
+            modelBuilder.Entity("api_my_bank_dotnet.Entities.User", b =>
+                {
+                    b.Property<ulong>("user_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint unsigned");
+
+                    b.Property<ulong>("address_id")
+                        .HasColumnType("bigint unsigned");
+
+                    b.Property<int>("age")
+                        .HasColumnType("int");
+
+                    b.Property<ulong>("bank_account_id")
+                        .HasColumnType("bigint unsigned");
+
+                    b.Property<DateTime>("birth_date")
                         .HasColumnType("date");
+
+                    b.Property<string>("civil_status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<DateTime>("created_at")
+                        .HasColumnType("datetime");
 
                     b.Property<string>("email")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<ulong>("endereco_id")
-                        .HasColumnType("bigint unsigned");
+                    b.Property<string>("full_name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
 
-                    b.Property<string>("estado_civil")
+                    b.Property<string>("gender")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
-
-                    b.Property<int>("idade")
-                        .HasColumnType("int");
 
                     b.Property<string>("login")
                         .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("varchar(15)");
 
-                    b.Property<string>("nome_completo")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<ulong>("renda_mensal")
+                    b.Property<ulong>("monthly_income")
                         .HasColumnType("bigint unsigned");
 
-                    b.Property<string>("rg")
+                    b.Property<string>("passport_number")
                         .IsRequired()
                         .HasMaxLength(9)
                         .HasColumnType("varchar(9)");
 
-                    b.Property<string>("senha")
+                    b.Property<string>("password")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<string>("sexo")
+                    b.Property<string>("surname")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
@@ -164,56 +159,53 @@ namespace api_my_bank_dotnet.Migrations
                     b.Property<DateTime>("updated_at")
                         .HasColumnType("datetime");
 
-                    b.HasKey("usuario_id");
+                    b.HasKey("user_id");
 
-                    b.HasIndex("conta_bancaria_id")
+                    b.HasIndex("address_id")
                         .IsUnique();
 
-                    b.HasIndex("cpf")
+                    b.HasIndex("bank_account_id")
                         .IsUnique();
 
                     b.HasIndex("email")
                         .IsUnique();
 
-                    b.HasIndex("endereco_id")
-                        .IsUnique();
-
                     b.HasIndex("login")
                         .IsUnique();
 
-                    b.HasIndex("rg")
+                    b.HasIndex("passport_number")
                         .IsUnique();
 
-                    b.ToTable("usuario");
+                    b.ToTable("user");
                 });
 
-            modelBuilder.Entity("api_my_bank_dotnet.Entities.Usuario", b =>
+            modelBuilder.Entity("api_my_bank_dotnet.Entities.User", b =>
                 {
-                    b.HasOne("api_my_bank_dotnet.Entities.ContaBancaria", "contaBancaria")
-                        .WithOne("usuario")
-                        .HasForeignKey("api_my_bank_dotnet.Entities.Usuario", "conta_bancaria_id")
+                    b.HasOne("api_my_bank_dotnet.Entities.Address", "address")
+                        .WithOne("user")
+                        .HasForeignKey("api_my_bank_dotnet.Entities.User", "address_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("api_my_bank_dotnet.Entities.Endereco", "endereco")
-                        .WithOne("usuario")
-                        .HasForeignKey("api_my_bank_dotnet.Entities.Usuario", "endereco_id")
+                    b.HasOne("api_my_bank_dotnet.Entities.BankAccount", "bankAccount")
+                        .WithOne("user")
+                        .HasForeignKey("api_my_bank_dotnet.Entities.User", "bank_account_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("contaBancaria");
+                    b.Navigation("address");
 
-                    b.Navigation("endereco");
+                    b.Navigation("bankAccount");
                 });
 
-            modelBuilder.Entity("api_my_bank_dotnet.Entities.ContaBancaria", b =>
+            modelBuilder.Entity("api_my_bank_dotnet.Entities.Address", b =>
                 {
-                    b.Navigation("usuario");
+                    b.Navigation("user");
                 });
 
-            modelBuilder.Entity("api_my_bank_dotnet.Entities.Endereco", b =>
+            modelBuilder.Entity("api_my_bank_dotnet.Entities.BankAccount", b =>
                 {
-                    b.Navigation("usuario");
+                    b.Navigation("user");
                 });
 #pragma warning restore 612, 618
         }

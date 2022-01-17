@@ -10,209 +10,200 @@ namespace api_my_bank_dotnet.Data
     {
     }
 
-    public DbSet<Endereco> Endereco { get; set; }
+    public DbSet<Address> Address { get; set; }
 
-    public DbSet<Usuario> Usuario { get; set; }
+    public DbSet<User> User { get; set; }
 
-    public DbSet<ContaBancaria> ContaBancaria { get; set; }
+    public DbSet<BankAccount> BankAccount { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-      // Endereço
-      modelBuilder.Entity<Endereco>()
-        .ToTable("endereco");
+      // Address
+      modelBuilder.Entity<Address>()
+        .ToTable("address");
 
-      modelBuilder.Entity<Endereco>()
-        .HasKey(e => e.endereco_id);
+      modelBuilder.Entity<Address>()
+        .HasKey(a => a.address_id);
 
-      modelBuilder.Entity<Endereco>()
-        .Property(e => e.endereco_id)
+      modelBuilder.Entity<Address>()
+        .Property(a => a.address_id)
         .ValueGeneratedOnAdd();
 
-      modelBuilder.Entity<Endereco>()
-        .Property(e => e.uf)
-        .HasMaxLength(2)
-        .IsRequired();
-
-      modelBuilder.Entity<Endereco>()
-        .Property(e => e.cep)
-        .HasMaxLength(8)
-        .IsRequired();
-
-      modelBuilder.Entity<Endereco>()
-        .Property(e => e.logradouro)
+      modelBuilder.Entity<Address>()
+        .Property(a => a.address_name)
         .HasMaxLength(255)
         .IsRequired();
 
-      modelBuilder.Entity<Endereco>()
-        .Property(e => e.numero)
+      modelBuilder.Entity<Address>()
+        .Property(a => a.number)
         .HasMaxLength(20)
         .IsRequired();
 
-      modelBuilder.Entity<Endereco>()
-        .Property(e => e.complemento)
+      modelBuilder.Entity<Address>()
+        .Property(a => a.complement)
         .HasMaxLength(255)
         .IsRequired();
 
-      modelBuilder.Entity<Endereco>()
-        .Property(e => e.bairro)
+      modelBuilder.Entity<Address>()
+        .Property(a => a.district)
         .HasMaxLength(255)
         .IsRequired();
 
-      modelBuilder.Entity<Endereco>()
-        .Property(e => e.cidade)
+      modelBuilder.Entity<Address>()
+        .Property(a => a.city)
         .HasMaxLength(255)
         .IsRequired();
 
-      modelBuilder.Entity<Endereco>()
-        .Property(e => e.created_at)
+      modelBuilder.Entity<Address>()
+        .Property(a => a.state)
+        .HasMaxLength(255)
+        .IsRequired();
+
+      modelBuilder.Entity<Address>()
+        .Property(a => a.country)
+        .HasMaxLength(255)
+        .IsRequired();
+
+      modelBuilder.Entity<Address>()
+        .Property(a => a.created_at)
         .HasColumnType("datetime")
         .IsRequired();
 
-      modelBuilder.Entity<Endereco>()
-        .Property(e => e.updated_at)
+      modelBuilder.Entity<Address>()
+        .Property(a => a.updated_at)
         .HasColumnType("datetime")
         .IsRequired();
 
-      // Conta Bancária
-      modelBuilder.Entity<ContaBancaria>()
-        .ToTable("conta_bancaria");
+      // Bank Account
+      modelBuilder.Entity<BankAccount>()
+        .ToTable("bank_account");
 
-      modelBuilder.Entity<ContaBancaria>()
-        .HasKey(c => c.conta_bancaria_id);
+      modelBuilder.Entity<BankAccount>()
+        .HasKey(ba => ba.bank_account_id);
 
-      modelBuilder.Entity<ContaBancaria>()
-        .Property(c => c.conta_bancaria_id)
+      modelBuilder.Entity<BankAccount>()
+        .Property(ba => ba.bank_account_id)
         .ValueGeneratedOnAdd();
 
-      modelBuilder.Entity<ContaBancaria>()
-        .Property(c => c.num_agencia)
+      modelBuilder.Entity<BankAccount>()
+        .Property(ba => ba.branch_number)
         .IsRequired();
 
-      modelBuilder.Entity<ContaBancaria>()
-        .Property(c => c.num_conta_corrente)
+      modelBuilder.Entity<BankAccount>()
+        .Property(ba => ba.account_number)
         .IsRequired();
 
-      modelBuilder.Entity<ContaBancaria>()
-        .HasIndex(c => c.num_conta_corrente)
+      modelBuilder.Entity<BankAccount>()
+        .HasIndex(ba => ba.account_number)
         .IsUnique();
 
-      modelBuilder.Entity<ContaBancaria>()
-        .Property(c => c.created_at)
+      modelBuilder.Entity<BankAccount>()
+        .Property(ba => ba.created_at)
         .HasColumnType("datetime")
         .IsRequired();
 
-      // Usuário
-      modelBuilder.Entity<Usuario>()
-        .ToTable("usuario");
+      // User
+      modelBuilder.Entity<User>()
+        .ToTable("user");
 
-      modelBuilder.Entity<Usuario>()
-        .HasKey(u => u.usuario_id);
+      modelBuilder.Entity<User>()
+        .HasKey(u => u.user_id);
 
-      modelBuilder.Entity<Usuario>()
-        .Property(c => c.usuario_id)
+      modelBuilder.Entity<User>()
+        .Property(u => u.user_id)
         .ValueGeneratedOnAdd();
 
       /*
-        Entity Framework não tem o on update da fk
-        FK de endereco_id
+        Entity Framework haven't on update fk
+        FK de address_id
       */
-      modelBuilder.Entity<Endereco>()
-        .HasOne(e => e.usuario)
-        .WithOne(u => u.endereco)
-        .HasForeignKey<Usuario>(u => u.endereco_id)
+      modelBuilder.Entity<Address>()
+        .HasOne(a => a.user)
+        .WithOne(u => u.address)
+        .HasForeignKey<User>(u => u.address_id)
         .OnDelete(DeleteBehavior.Cascade);
 
       /*
-        Entity Framework não tem o on update da fk
-        FK de conta_bancaria_id
+        Entity Framework haven't on update fk
+        FK de bank_account_id
       */
-      modelBuilder.Entity<ContaBancaria>()
-        .HasOne(c => c.usuario)
-        .WithOne(u => u.contaBancaria)
-        .HasForeignKey<Usuario>(u => u.conta_bancaria_id)
+      modelBuilder.Entity<BankAccount>()
+        .HasOne(ba => ba.user)
+        .WithOne(u => u.bankAccount)
+        .HasForeignKey<User>(u => u.bank_account_id)
         .OnDelete(DeleteBehavior.Cascade);
 
-      modelBuilder.Entity<Usuario>()
-        .Property(u => u.nome_completo)
+      modelBuilder.Entity<User>()
+        .Property(u => u.full_name)
         .HasMaxLength(255)
         .IsRequired();
 
-      modelBuilder.Entity<Usuario>()
-        .Property(u => u.apelido)
+      modelBuilder.Entity<User>()
+        .Property(u => u.surname)
         .HasMaxLength(20)
         .IsRequired();
 
-      modelBuilder.Entity<Usuario>()
+      modelBuilder.Entity<User>()
         .Property(u => u.login)
         .HasMaxLength(15)
         .IsRequired();
 
-      modelBuilder.Entity<Usuario>()
-       .HasIndex(c => c.login)
+      modelBuilder.Entity<User>()
+       .HasIndex(u => u.login)
        .IsUnique();
 
-      modelBuilder.Entity<Usuario>()
+      modelBuilder.Entity<User>()
         .Property(u => u.email)
         .HasMaxLength(100)
         .IsRequired();
 
-      modelBuilder.Entity<Usuario>()
+      modelBuilder.Entity<User>()
        .HasIndex(u => u.email)
        .IsUnique();
 
-      modelBuilder.Entity<Usuario>()
-       .Property(u => u.senha)
+      modelBuilder.Entity<User>()
+       .Property(u => u.password)
        .HasMaxLength(100)
        .IsRequired();
 
-      modelBuilder.Entity<Usuario>()
-        .Property(u => u.rg)
+      modelBuilder.Entity<User>()
+        .Property(u => u.passport_number)
         .HasMaxLength(9)
         .IsRequired();
 
-      modelBuilder.Entity<Usuario>()
-        .HasIndex(u => u.rg)
+      modelBuilder.Entity<User>()
+        .HasIndex(u => u.passport_number)
         .IsUnique();
 
-      modelBuilder.Entity<Usuario>()
-        .Property(u => u.cpf)
-        .HasMaxLength(11)
+      modelBuilder.Entity<User>()
+        .Property(u => u.age)
         .IsRequired();
 
-      modelBuilder.Entity<Usuario>()
-        .HasIndex(u => u.cpf)
-        .IsUnique();
-
-      modelBuilder.Entity<Usuario>()
-        .Property(u => u.idade)
-        .IsRequired();
-
-      modelBuilder.Entity<Usuario>()
-        .Property(u => u.sexo)
+      modelBuilder.Entity<User>()
+        .Property(u => u.gender)
         .HasMaxLength(20)
         .IsRequired();
 
-      modelBuilder.Entity<Usuario>()
-        .Property(u => u.estado_civil)
+      modelBuilder.Entity<User>()
+        .Property(u => u.civil_status)
         .HasMaxLength(20)
         .IsRequired();
 
-      modelBuilder.Entity<Usuario>()
-        .Property(u => u.renda_mensal)
+      modelBuilder.Entity<User>()
+        .Property(u => u.monthly_income)
         .IsRequired();
 
-      modelBuilder.Entity<Usuario>()
-        .Property(u => u.data_nascimento)
+      modelBuilder.Entity<User>()
+        .Property(u => u.birth_date)
         .HasColumnType("date")
         .IsRequired();
 
-      modelBuilder.Entity<Usuario>()
+      modelBuilder.Entity<User>()
         .Property(e => e.created_at)
         .HasColumnType("datetime")
         .IsRequired();
 
-      modelBuilder.Entity<Usuario>()
+      modelBuilder.Entity<User>()
         .Property(e => e.updated_at)
         .HasColumnType("datetime")
         .IsRequired();

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace api_my_bank_dotnet.Migrations
 {
-  public partial class endereco : Migration
+  public partial class address : Migration
   {
     protected override void Up(MigrationBuilder migrationBuilder)
     {
@@ -12,30 +12,31 @@ namespace api_my_bank_dotnet.Migrations
         .Annotation("MySql:CharSet", "utf8mb4");
 
       migrationBuilder.CreateTable(
-        name: "endereco",
+        name: "address",
         columns: table => new
         {
-          endereco_id = table.Column<ulong>(type: "bigint unsigned", nullable: false)
+          address_id = table.Column<ulong>(type: "bigint unsigned", nullable: false)
             .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
 
-          uf = table.Column<string>(type: "varchar(2)", maxLength: 2, nullable: false)
+          address_name = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
             .Annotation("MySql:CharSet", "utf8mb4"),
 
-          cep = table.Column<string>(type: "varchar(8)", maxLength: 8, nullable: false)
+          number = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
             .Annotation("MySql:CharSet", "utf8mb4"),
 
-          logradouro = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+          complement = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
             .Annotation("MySql:CharSet", "utf8mb4"),
 
-          numero = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
+          district = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
             .Annotation("MySql:CharSet", "utf8mb4"),
 
-          complemento = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
-            .Annotation("MySql:CharSet", "utf8mb4"),
-          bairro = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+          city = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
             .Annotation("MySql:CharSet", "utf8mb4"),
 
-          cidade = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+          state = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+            .Annotation("MySql:CharSet", "utf8mb4"),
+
+          country = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
             .Annotation("MySql:CharSet", "utf8mb4"),
 
           created_at = table.Column<DateTime>(type: "datetime", nullable: false),
@@ -44,7 +45,7 @@ namespace api_my_bank_dotnet.Migrations
         },
         constraints: table =>
         {
-          table.PrimaryKey("PK_endereco", x => x.endereco_id);
+          table.PrimaryKey("PK_address", x => x.address_id);
         })
       .Annotation("MySql:CharSet", "utf8mb4");
     }
@@ -52,7 +53,7 @@ namespace api_my_bank_dotnet.Migrations
     protected override void Down(MigrationBuilder migrationBuilder)
     {
       migrationBuilder.DropTable(
-        name: "endereco");
+        name: "address");
     }
   }
 }
