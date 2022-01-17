@@ -34,7 +34,7 @@ namespace api_my_bank_dotnet.Migrations
           email = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
             .Annotation("MySql:CharSet", "utf8mb4"),
 
-          senha = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
+          senha = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
             .Annotation("MySql:CharSet", "utf8mb4"),
 
           rg = table.Column<string>(type: "varchar(9)", maxLength: 9, nullable: false)

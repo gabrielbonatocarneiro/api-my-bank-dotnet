@@ -80,8 +80,8 @@ namespace api_my_bank_dotnet.Migrations
 
         b.Property<string>("senha")
           .IsRequired()
-          .HasMaxLength(20)
-          .HasColumnType("varchar(20)");
+          .HasMaxLength(100)
+          .HasColumnType("varchar(100)");
 
         b.Property<string>("sexo")
           .IsRequired()

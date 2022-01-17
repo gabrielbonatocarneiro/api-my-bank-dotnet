@@ -16,13 +16,6 @@ namespace api_my_bank_dotnet.Controllers
   [Route("api/usuario")]
   public class UsuarioController : ControllerBase
   {
-    // private readonly UsuarioRepositoryInterface repositoryInterface;
-
-    // public UsuarioController(UsuarioRepositoryInterface repositoryInterface)
-    // {
-    //   this.repositoryInterface = repositoryInterface;
-    // }
-
     private DataContext context;
 
     private UsuarioRepository repository;
@@ -57,11 +50,13 @@ namespace api_my_bank_dotnet.Controllers
     [HttpPost]
     public async Task<ActionResult> CreateUsuarioAsync(CreateUsuarioDto usuarioDto)
     {
+      var hashCodeTimeNow = DateTime.Now.GetHashCode();
+
       var transaction = context.Database.BeginTransaction();
 
       try
       {
-        transaction.CreateSavepoint("AntesDeAdicionar");
+        transaction.CreateSavepoint($"AntesDeAdicionar{hashCodeTimeNow}");
 
         await repository.CreateUsuarioAsync(usuarioDto);
 
@@ -71,10 +66,58 @@ namespace api_my_bank_dotnet.Controllers
       }
       catch (Exception e)
       {
-        transaction.RollbackToSavepoint("AntesDeAdicionar");
+        transaction.RollbackToSavepoint($"AntesDeAdicionar{hashCodeTimeNow}");
 
         return BadRequest($"Erro ao criar o usuário: {e}");
       }
+    }
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult> UpdateUsuarioAsync(ulong id, UpdateUsuarioDto usuarioDto)
+    {
+      var existingUsuario = await repository.GetUsuarioAsync(id);
+
+      if (existingUsuario is null)
+      {
+        return NotFound();
+      }
+
+      var hashCodeTimeNow = DateTime.Now.GetHashCode();
+
+      var transaction = context.Database.BeginTransaction();
+
+      try
+      {
+        transaction.CreateSavepoint($"AntesDeAtualizar{hashCodeTimeNow}");
+
+        await repository.UpdateUsuarioAsync(id, usuarioDto);
+
+        transaction.Commit();
+
+        return NoContent();
+      }
+      catch (Exception e)
+      {
+        transaction.RollbackToSavepoint($"AntesDeAtualizar{hashCodeTimeNow}");
+
+        return BadRequest($"Erro ao atualizar o usuário: {e}");
+      }
+    }
+
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> DeleteUsuarioAsync(ulong id)
+    {
+      var existingUsuario = await repository.GetUsuarioAsync(id);
+
+      if (existingUsuario is null)
+      {
+        return NotFound();
+      }
+
+      await repository.DeleteUsuarioAsync(id);
+
+      return NoContent();
     }
   }
 }

@@ -34,6 +34,8 @@ namespace api_my_bank_dotnet
       {
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "My Bank", Version = "v1" });
       });
+
+      services.AddDataProtection();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

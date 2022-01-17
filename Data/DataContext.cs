@@ -163,7 +163,7 @@ namespace api_my_bank_dotnet.Data
 
       modelBuilder.Entity<Usuario>()
        .Property(u => u.senha)
-       .HasMaxLength(20)
+       .HasMaxLength(100)
        .IsRequired();
 
       modelBuilder.Entity<Usuario>()
