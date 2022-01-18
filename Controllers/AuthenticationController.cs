@@ -1,14 +1,12 @@
 using System;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using api_my_bank_dotnet.Data;
 using api_my_bank_dotnet.Models;
 using api_my_bank_dotnet.Repositories;
 using api_my_bank_dotnet.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.IdentityModel.Tokens;
 
 namespace api_my_bank_dotnet.Controllers
 {
@@ -41,11 +39,14 @@ namespace api_my_bank_dotnet.Controllers
       }
 
       var token = TokenService.GenerateToken((dynamic)user);
+      var refreshToken = TokenService.GenerateRefreshToken();
+      TokenService.SaveRefreshToken(user.login, refreshToken);
 
       return new
       {
         user = user,
-        token = token
+        token = token,
+        refreshToken = refreshToken
       };
     }
 
@@ -58,5 +59,31 @@ namespace api_my_bank_dotnet.Controllers
     [Route("authenticated")]
     [Authorize] // Roles -> [Authorize(Roles = "employee,manager")]
     public string Authenticated() => String.Format("Autenticado - {0}", User.Identity.Name);
+
+    [HttpPost]
+    [Route("refresh")]
+    public IActionResult Refresh(string token, string refreshToken)
+    {
+      var principal = TokenService.GetPrincipalFromExpiredToken(token);
+      var login = principal.Identity.Name;
+
+      var savedRefreshToken = TokenService.GetRefreshToken(login);
+      if (savedRefreshToken != refreshToken)
+      {
+        throw new SecurityTokenException("Invalid refresh token");
+      }
+
+      var newJwtToken = TokenService.GenerateToken(principal.Claims);
+      var newRefreshToken = TokenService.GenerateRefreshToken();
+
+      TokenService.DeleteRefreshToken(login, refreshToken);
+      TokenService.SaveRefreshToken(login, newRefreshToken);
+
+      return new ObjectResult(new
+      {
+        token = newJwtToken,
+        refreshToken = newRefreshToken
+      });
+    }
   }
 }
