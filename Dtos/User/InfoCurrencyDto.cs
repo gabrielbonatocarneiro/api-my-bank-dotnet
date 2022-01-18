@@ -10,7 +10,7 @@ namespace api_my_bank_dotnet.Dtos.User
     public string currency { get; set; }
 
     [Required]
-    [Range(1, int.MaxValue)]
+    [Range(1, ulong.MaxValue)]
     public ulong monthly_income { get; set; }
   }
 }

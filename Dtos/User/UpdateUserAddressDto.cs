@@ -1,12 +1,12 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace api_my_bank_dotnet.Dtos.User
 {
   public class UpdateUserAddressDto
   {
-    [Required]
     [Range(1, ulong.MaxValue)]
-    public ulong address_id { get; set; }
+    public ulong? address_id { get; set; }
 
     [Required]
     [StringLength(255, MinimumLength = 2)]
@@ -36,5 +36,7 @@ namespace api_my_bank_dotnet.Dtos.User
     [RegularExpression("BRAZIL", ErrorMessage = "The country must be BRAZIL")]
     [StringLength(255, MinimumLength = 2)]
     public string country { get; set; }
+
+    public DateTime? created_at { get; set; }
   }
 }

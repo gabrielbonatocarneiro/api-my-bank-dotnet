@@ -6,6 +6,8 @@ namespace api_my_bank_dotnet.Entities
   {
     public ulong address_id { get; set; }
 
+    public ulong user_id { get; set; }
+
     public string address_name { get; set; }
 
     public string number { get; set; }

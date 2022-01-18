@@ -23,7 +23,7 @@ namespace api_my_bank_dotnet.Repositories
     public async Task<IEnumerable<UserDto>> GetUsersAsync()
     {
       var users = await _context.User
-        .Include(u => u.address)
+        .Include(u => u.addresses)
         .Include(u => u.bankAccount)
         .Select(user => user.AsDto())
         .AsNoTracking()
@@ -36,7 +36,7 @@ namespace api_my_bank_dotnet.Repositories
     {
       var user = await _context.User
         .Where(u => u.user_id == userId)
-        .Include(u => u.address)
+        .Include(u => u.addresses)
         .Include(u => u.bankAccount)
         .AsNoTracking()
         .FirstOrDefaultAsync();
@@ -47,21 +47,6 @@ namespace api_my_bank_dotnet.Repositories
     public async Task CreateUserAsync(CreateUserDto userDto)
     {
       DateTime date = DateTime.UtcNow;
-
-      Address address = new()
-      {
-        address_name = userDto.address.address_name,
-        number = userDto.address.number,
-        complement = userDto.address.complement,
-        district = userDto.address.district,
-        city = userDto.address.city,
-        state = userDto.address.state,
-        country = userDto.address.country,
-        created_at = date,
-        updated_at = date
-      };
-      await _context.Address.AddAsync(address);
-      await _context.SaveChangesAsync();
 
       BankAccount bankAccount = new()
       {
@@ -76,7 +61,6 @@ namespace api_my_bank_dotnet.Repositories
 
       User user = new()
       {
-        address_id = address.address_id,
         bank_account_id = bankAccount.bank_account_id,
         full_name = userDto.full_name,
         surname = userDto.surname,
@@ -93,6 +77,25 @@ namespace api_my_bank_dotnet.Repositories
       };
       await _context.User.AddAsync(user);
       await _context.SaveChangesAsync();
+
+      foreach (CreateUserAddressDto addressDto in userDto.addresses)
+      {
+        Address address = new()
+        {
+          user_id = user.user_id,
+          address_name = addressDto.address_name,
+          number = addressDto.number,
+          complement = addressDto.complement,
+          district = addressDto.district,
+          city = addressDto.city,
+          state = addressDto.state,
+          country = addressDto.country,
+          created_at = date,
+          updated_at = date
+        };
+        await _context.Address.AddAsync(address);
+        await _context.SaveChangesAsync();
+      }
     }
 
     private async Task<ulong> GenerateBankAccountNumber()
@@ -128,21 +131,7 @@ namespace api_my_bank_dotnet.Repositories
 
       DateTime date = DateTime.UtcNow;
 
-      Address address = new()
-      {
-        address_id = userDto.address.address_id,
-        address_name = userDto.address.address_name,
-        number = userDto.address.number,
-        complement = userDto.address.complement,
-        district = userDto.address.district,
-        city = userDto.address.city,
-        state = userDto.address.state,
-        country = userDto.address.country,
-        updated_at = date
-      };
-      _context.Address.Update(address);
-      await _context.SaveChangesAsync();
-
+      // User
       var user = await _context.User.Where(u => u.user_id == userId).FirstOrDefaultAsync();
 
       user.full_name = userDto.full_name;
@@ -160,6 +149,7 @@ namespace api_my_bank_dotnet.Repositories
       _context.User.Update(user);
       await _context.SaveChangesAsync();
 
+      // Bank Account
       var bankAccount = await _context.BankAccount.Where(ba => ba.bank_account_id == user.bank_account_id).FirstOrDefaultAsync();
 
       bankAccount.currency = userDto.infoCurrency.currency;
@@ -167,6 +157,37 @@ namespace api_my_bank_dotnet.Repositories
 
       _context.BankAccount.Update(bankAccount);
       await _context.SaveChangesAsync();
+
+      // Address
+      foreach (UpdateUserAddressDto addressDto in userDto.addresses)
+      {
+        Address address = new()
+        {
+          user_id = userId,
+          address_name = addressDto.address_name,
+          number = addressDto.number,
+          complement = addressDto.complement,
+          district = addressDto.district,
+          city = addressDto.city,
+          state = addressDto.state,
+          country = addressDto.country,
+          created_at = addressDto.created_at ?? date,
+          updated_at = date
+        };
+
+        if (Convert.ToUInt64(addressDto.address_id).Equals(null))
+        {
+          await _context.Address.AddAsync(address);
+        }
+        else
+        {
+          address.address_id = Convert.ToUInt64(addressDto.address_id);
+
+          _context.Address.Update(address);
+        }
+
+        await _context.SaveChangesAsync();
+      }
     }
 
     public async Task DeleteUserAsync(ulong userId)
@@ -177,10 +198,6 @@ namespace api_my_bank_dotnet.Repositories
 
       var bankAccount = await _context.BankAccount.Where(c => c.bank_account_id == user.bank_account_id).FirstOrDefaultAsync();
       _context.BankAccount.Remove(bankAccount);
-      await _context.SaveChangesAsync();
-
-      var address = await _context.Address.Where(e => e.address_id == user.address_id).FirstOrDefaultAsync();
-      _context.Address.Remove(address);
       await _context.SaveChangesAsync();
     }
   }

@@ -8,7 +8,7 @@ using api_my_bank_dotnet.Data;
 namespace api_my_bank_dotnet.Migrations
 {
   [DbContext(typeof(DataContext))]
-  [Migration("20220114115720_bank_account")]
+  [Migration("20220114113355_bank_account")]
   partial class bank_account
   {
     protected override void BuildTargetModel(ModelBuilder modelBuilder)

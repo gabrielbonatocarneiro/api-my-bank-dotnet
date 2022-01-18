@@ -1,12 +1,11 @@
 using System;
+using System.Collections.Generic;
 
 namespace api_my_bank_dotnet.Entities
 {
   public class User
   {
     public ulong user_id { get; set; }
-
-    public ulong address_id { get; set; }
 
     public ulong bank_account_id { get; set; }
 
@@ -34,7 +33,7 @@ namespace api_my_bank_dotnet.Entities
 
     public DateTime updated_at { get; set; }
 
-    public Address address { get; set; }
+    public ICollection<Address> addresses { get; set; }
 
     public BankAccount bankAccount { get; set; }
   }

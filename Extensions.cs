@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using api_my_bank_dotnet.Dtos.User;
 using api_my_bank_dotnet.Entities;
 
@@ -7,10 +8,29 @@ namespace api_my_bank_dotnet
   {
     public static UserDto AsDto(this User user)
     {
+      List<Address> addresses = new();
+
+      foreach (Address address in user.addresses)
+      {
+        addresses.Add(new Address
+        {
+          address_id = address.address_id,
+          user_id = address.user_id,
+          address_name = address.address_name,
+          number = address.number,
+          complement = address.complement,
+          district = address.district,
+          city = address.city,
+          state = address.state,
+          country = address.country,
+          created_at = address.created_at,
+          updated_at = address.updated_at
+        });
+      }
+
       return new UserDto
       {
         user_id = user.user_id,
-        address_id = user.address_id,
         bank_account_id = user.bank_account_id,
         full_name = user.full_name,
         surname = user.surname,
@@ -23,19 +43,7 @@ namespace api_my_bank_dotnet
         birth_date = user.birth_date,
         created_at = user.created_at,
         updated_at = user.updated_at,
-        address = new()
-        {
-          address_id = user.address.address_id,
-          address_name = user.address.address_name,
-          number = user.address.number,
-          complement = user.address.complement,
-          district = user.address.district,
-          city = user.address.city,
-          state = user.address.state,
-          country = user.address.country,
-          created_at = user.address.created_at,
-          updated_at = user.address.updated_at
-        },
+        addresses = addresses,
         bankAccount = new()
         {
           bank_account_id = user.bankAccount.bank_account_id,

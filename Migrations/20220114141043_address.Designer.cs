@@ -8,7 +8,7 @@ using api_my_bank_dotnet.Data;
 namespace api_my_bank_dotnet.Migrations
 {
   [DbContext(typeof(DataContext))]
-  [Migration("20220114113355_address")]
+  [Migration("20220114141043_address")]
   partial class address
   {
     protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,9 @@ namespace api_my_bank_dotnet.Migrations
         b.Property<ulong>("address_id")
           .ValueGeneratedOnAdd()
           .HasColumnType("bigint unsigned");
+
+        b.Property<ulong>("user_id")
+         .HasColumnType("bigint unsigned");
 
         b.Property<string>("address_name")
           .IsRequired()
@@ -67,7 +70,25 @@ namespace api_my_bank_dotnet.Migrations
 
         b.HasKey("address_id");
 
+        b.HasIndex("user_id");
+
         b.ToTable("address");
+      });
+
+      modelBuilder.Entity("api_my_bank_dotnet.Entities.Address", b =>
+      {
+        b.HasOne("api_my_bank_dotnet.Entities.User", "user")
+          .WithOne("addresses")
+          .HasForeignKey("api_my_bank_dotnet.Entities.User", "bank_account_id")
+          .OnDelete(DeleteBehavior.Cascade)
+          .IsRequired();
+
+        b.Navigation("user");
+      });
+
+      modelBuilder.Entity("api_my_bank_dotnet.Entities.User", b =>
+      {
+        b.Navigation("addresses");
       });
 #pragma warning restore 612, 618
     }

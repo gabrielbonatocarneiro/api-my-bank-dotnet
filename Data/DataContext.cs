@@ -29,6 +29,16 @@ namespace api_my_bank_dotnet.Data
         .Property(a => a.address_id)
         .ValueGeneratedOnAdd();
 
+      /*
+        Entity Framework haven't on update fk
+        FK de address_id
+      */
+      modelBuilder.Entity<Address>()
+        .HasOne(a => a.user)
+        .WithMany(u => u.addresses)
+        .HasForeignKey(a => a.user_id)
+        .OnDelete(DeleteBehavior.Cascade);
+
       modelBuilder.Entity<Address>()
         .Property(a => a.address_name)
         .HasMaxLength(255)
@@ -121,16 +131,6 @@ namespace api_my_bank_dotnet.Data
       modelBuilder.Entity<User>()
         .Property(u => u.user_id)
         .ValueGeneratedOnAdd();
-
-      /*
-        Entity Framework haven't on update fk
-        FK de address_id
-      */
-      modelBuilder.Entity<Address>()
-        .HasOne(a => a.user)
-        .WithOne(u => u.address)
-        .HasForeignKey<User>(u => u.address_id)
-        .OnDelete(DeleteBehavior.Cascade);
 
       /*
         Entity Framework haven't on update fk

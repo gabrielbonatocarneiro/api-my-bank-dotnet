@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace api_my_bank_dotnet.Dtos.User
@@ -52,6 +53,6 @@ namespace api_my_bank_dotnet.Dtos.User
     public InfoCurrencyDto infoCurrency { get; set; }
 
     [Required]
-    public CreateUserAddressDto address { get; set; }
+    public ICollection<CreateUserAddressDto> addresses { get; set; }
   }
 }

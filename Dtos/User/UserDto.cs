@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using api_my_bank_dotnet.Entities;
 
 namespace api_my_bank_dotnet.Dtos.User
@@ -27,15 +28,13 @@ namespace api_my_bank_dotnet.Dtos.User
 
     public string civil_status { get; set; }
 
-    public ulong monthly_income { get; set; }
-
     public DateTime birth_date { get; set; }
 
     public DateTime created_at { get; set; }
 
     public DateTime updated_at { get; set; }
 
-    public Address address { get; set; }
+    public ICollection<Address> addresses { get; set; }
 
     public BankAccount bankAccount { get; set; }
   }

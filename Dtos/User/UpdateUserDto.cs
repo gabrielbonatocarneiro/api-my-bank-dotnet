@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace api_my_bank_dotnet.Dtos.User
@@ -45,10 +46,6 @@ namespace api_my_bank_dotnet.Dtos.User
     public string civil_status { get; set; }
 
     [Required]
-    [Range(1, int.MaxValue)]
-    public ulong monthly_income { get; set; }
-
-    [Required]
     [DataType(DataType.Date)]
     public DateTime birth_date { get; set; }
 
@@ -56,6 +53,6 @@ namespace api_my_bank_dotnet.Dtos.User
     public InfoCurrencyDto infoCurrency { get; set; }
 
     [Required]
-    public UpdateUserAddressDto address { get; set; }
+    public ICollection<UpdateUserAddressDto> addresses { get; set; }
   }
 }

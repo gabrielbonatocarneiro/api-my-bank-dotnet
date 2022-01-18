@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using api_my_bank_dotnet.Data;
 using api_my_bank_dotnet.Dtos.User;
+using api_my_bank_dotnet.Entities;
 using api_my_bank_dotnet.Repositories;
 using Microsoft.AspNetCore.Mvc;
 

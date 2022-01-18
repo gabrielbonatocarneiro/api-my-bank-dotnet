@@ -18,8 +18,6 @@ namespace api_my_bank_dotnet.Migrations
           user_id = table.Column<ulong>(type: "bigint unsigned", nullable: false)
             .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
 
-          address_id = table.Column<ulong>(type: "bigint unsigned", nullable: false),
-
           bank_account_id = table.Column<ulong>(type: "bigint unsigned", nullable: false),
 
           full_name = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
@@ -64,13 +62,6 @@ namespace api_my_bank_dotnet.Migrations
             principalTable: "bank_account",
             principalColumn: "bank_account_id",
             onDelete: ReferentialAction.Cascade);
-
-          table.ForeignKey(
-            name: "FK_user_address_address_id",
-            column: x => x.address_id,
-            principalTable: "address",
-            principalColumn: "address_id",
-            onDelete: ReferentialAction.Cascade);
         })
       .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -84,12 +75,6 @@ namespace api_my_bank_dotnet.Migrations
         name: "IX_user_email",
         table: "user",
         column: "email",
-        unique: true);
-
-      migrationBuilder.CreateIndex(
-        name: "IX_user_address_id",
-        table: "user",
-        column: "address_id",
         unique: true);
 
       migrationBuilder.CreateIndex(

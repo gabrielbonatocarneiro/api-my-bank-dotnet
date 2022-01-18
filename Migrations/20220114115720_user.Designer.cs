@@ -9,7 +9,7 @@ using api_my_bank_dotnet.Data;
 namespace api_my_bank_dotnet.Migrations
 {
   [DbContext(typeof(DataContext))]
-  [Migration("20220114141043_user")]
+  [Migration("20220114113355_user")]
   partial class user
   {
     protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,9 +23,6 @@ namespace api_my_bank_dotnet.Migrations
       {
         b.Property<ulong>("user_id")
           .ValueGeneratedOnAdd()
-          .HasColumnType("bigint unsigned");
-
-        b.Property<ulong>("address_id")
           .HasColumnType("bigint unsigned");
 
         b.Property<ulong>("bank_account_id")
@@ -85,9 +82,6 @@ namespace api_my_bank_dotnet.Migrations
 
         b.HasKey("user_id");
 
-        b.HasIndex("address_id")
-          .IsUnique();
-
         b.HasIndex("bank_account_id")
           .IsUnique();
 
@@ -111,20 +105,7 @@ namespace api_my_bank_dotnet.Migrations
           .OnDelete(DeleteBehavior.Cascade)
           .IsRequired();
 
-        b.HasOne("api_my_bank_dotnet.Entities.Address", "address")
-          .WithOne("user")
-          .HasForeignKey("api_my_bank_dotnet.Entities.User", "address_id")
-          .OnDelete(DeleteBehavior.Cascade)
-          .IsRequired();
-
         b.Navigation("bankAccount");
-
-        b.Navigation("address");
-      });
-
-      modelBuilder.Entity("api_my_bank_dotnet.Entities.Address", b =>
-      {
-        b.Navigation("user");
       });
 
       modelBuilder.Entity("api_my_bank_dotnet.Entities.BankAccount", b =>
