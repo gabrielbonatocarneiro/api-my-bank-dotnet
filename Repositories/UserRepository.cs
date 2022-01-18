@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using api_my_bank_dotnet.Common;
 using api_my_bank_dotnet.Data;
 using api_my_bank_dotnet.Dtos.User;
-using api_my_bank_dotnet.Entities;
+using api_my_bank_dotnet.Models;
 using api_my_bank_dotnet.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 

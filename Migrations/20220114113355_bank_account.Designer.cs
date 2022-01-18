@@ -18,7 +18,7 @@ namespace api_my_bank_dotnet.Migrations
         .HasAnnotation("Relational:MaxIdentifierLength", 64)
         .HasAnnotation("ProductVersion", "5.0.13");
 
-      modelBuilder.Entity("api_my_bank_dotnet.Entities.BankAccount", b =>
+      modelBuilder.Entity("api_my_bank_dotnet.Models.BankAccount", b =>
       {
         b.Property<ulong>("bank_account_id")
           .ValueGeneratedOnAdd()

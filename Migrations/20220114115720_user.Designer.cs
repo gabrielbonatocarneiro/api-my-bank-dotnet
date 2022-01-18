@@ -19,7 +19,7 @@ namespace api_my_bank_dotnet.Migrations
         .HasAnnotation("Relational:MaxIdentifierLength", 64)
         .HasAnnotation("ProductVersion", "5.0.13");
 
-      modelBuilder.Entity("api_my_bank_dotnet.Entities.User", b =>
+      modelBuilder.Entity("api_my_bank_dotnet.Models.User", b =>
       {
         b.Property<ulong>("user_id")
           .ValueGeneratedOnAdd()
@@ -97,18 +97,18 @@ namespace api_my_bank_dotnet.Migrations
         b.ToTable("user");
       });
 
-      modelBuilder.Entity("api_my_bank_dotnet.Entities.User", b =>
+      modelBuilder.Entity("api_my_bank_dotnet.Models.User", b =>
       {
-        b.HasOne("api_my_bank_dotnet.Entities.BankAccount", "bankAccount")
+        b.HasOne("api_my_bank_dotnet.Models.BankAccount", "bankAccount")
           .WithOne("user")
-          .HasForeignKey("api_my_bank_dotnet.Entities.User", "bank_account_id")
+          .HasForeignKey("api_my_bank_dotnet.Models.User", "bank_account_id")
           .OnDelete(DeleteBehavior.Cascade)
           .IsRequired();
 
         b.Navigation("bankAccount");
       });
 
-      modelBuilder.Entity("api_my_bank_dotnet.Entities.BankAccount", b =>
+      modelBuilder.Entity("api_my_bank_dotnet.Models.BankAccount", b =>
       {
         b.Navigation("user");
       });

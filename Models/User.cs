@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace api_my_bank_dotnet.Entities
+namespace api_my_bank_dotnet.Models
 {
   public class User
   {

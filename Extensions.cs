@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using api_my_bank_dotnet.Dtos.User;
-using api_my_bank_dotnet.Entities;
+using api_my_bank_dotnet.Models;
 
 namespace api_my_bank_dotnet
 {

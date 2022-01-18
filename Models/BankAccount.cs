@@ -1,6 +1,6 @@
 using System;
 
-namespace api_my_bank_dotnet.Entities
+namespace api_my_bank_dotnet.Models
 {
   public class BankAccount
   {

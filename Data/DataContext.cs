@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
-using api_my_bank_dotnet.Entities;
+using api_my_bank_dotnet.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace api_my_bank_dotnet.Data

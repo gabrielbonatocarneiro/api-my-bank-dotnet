@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using api_my_bank_dotnet.Data;
 using api_my_bank_dotnet.Dtos.User;
-using api_my_bank_dotnet.Entities;
+using api_my_bank_dotnet.Models;
 using api_my_bank_dotnet.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api_my_bank_dotnet.Controllers
@@ -25,6 +26,7 @@ namespace api_my_bank_dotnet.Controllers
     }
 
     [HttpGet]
+    [Authorize]
     public async Task<IEnumerable<UserDto>> GetUsersAsync()
     {
       var usuarios = await repository.GetUsersAsync();
@@ -33,6 +35,7 @@ namespace api_my_bank_dotnet.Controllers
     }
 
     [HttpGet("{id}")]
+    [Authorize]
     public async Task<ActionResult<UserDto>> GetUserAsync(ulong id)
     {
       var usuario = await repository.GetUserAsync(id);
@@ -46,6 +49,7 @@ namespace api_my_bank_dotnet.Controllers
     }
 
     [HttpPost]
+    [AllowAnonymous]
     public async Task<ActionResult> CreateUserAsync(CreateUserDto userDto)
     {
       var hashCodeTimeNow = DateTime.Now.GetHashCode();
@@ -71,6 +75,7 @@ namespace api_my_bank_dotnet.Controllers
     }
 
     [HttpPut("{id}")]
+    [Authorize]
     public async Task<ActionResult> UpdateUserAsync(ulong id, UpdateUserDto userDto)
     {
       var existingUser = await repository.GetUserAsync(id);
@@ -103,6 +108,7 @@ namespace api_my_bank_dotnet.Controllers
     }
 
     [HttpDelete("{id}")]
+    [Authorize]
     public async Task<ActionResult> DeleteUserAsync(ulong id)
     {
       var existingUser = await repository.GetUserAsync(id);
