@@ -1,0 +1,10 @@
+{
+  "name": "my_bank",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "rm -Rf bin/ && rm -Rf obj/ && dotnet restore && dotnet ef database update && dotnet watch run",
+    "start": "rm -Rf bin/ && rm -Rf obj/ && dotnet restore && dotnet ef database update && dotnet run",
+    "migration:run": "dotnet ef database update",
+    "migration:rollback": "dotnet ef database update 0 && dotnet ef migrations remove"
+  }
+}

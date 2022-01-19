@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using api_my_bank_dotnet.Data;
 using api_my_bank_dotnet.Dtos.User;
-using api_my_bank_dotnet.Models;
 using api_my_bank_dotnet.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -50,7 +49,7 @@ namespace api_my_bank_dotnet.Controllers
 
     [HttpPost]
     [AllowAnonymous]
-    public async Task<ActionResult> CreateUserAsync(CreateUserDto userDto)
+    public async Task<ActionResult<UserDto>> CreateUserAsync(CreateUserDto userDto)
     {
       var hashCodeTimeNow = DateTime.Now.GetHashCode();
 
@@ -60,11 +59,11 @@ namespace api_my_bank_dotnet.Controllers
       {
         transaction.CreateSavepoint($"addUser{hashCodeTimeNow}");
 
-        await repository.CreateUserAsync(userDto);
+        var user = await repository.CreateUserAsync(userDto);
 
         transaction.Commit();
 
-        return NoContent();
+        return user.AsDto();
       }
       catch (Exception e)
       {

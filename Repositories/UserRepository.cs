@@ -44,7 +44,7 @@ namespace api_my_bank_dotnet.Repositories
       return user;
     }
 
-    public async Task CreateUserAsync(CreateUserDto userDto)
+    public async Task<User> CreateUserAsync(CreateUserDto userDto)
     {
       DateTime date = DateTime.UtcNow;
 
@@ -96,6 +96,8 @@ namespace api_my_bank_dotnet.Repositories
         await _context.Address.AddAsync(address);
         await _context.SaveChangesAsync();
       }
+
+      return user;
     }
 
     private async Task<ulong> GenerateBankAccountNumber()

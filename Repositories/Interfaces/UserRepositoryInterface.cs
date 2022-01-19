@@ -12,7 +12,7 @@ namespace api_my_bank_dotnet.Repositories.Interfaces
 
     Task<User> GetUserAsync(ulong userId);
 
-    Task CreateUserAsync(CreateUserDto userDto);
+    Task<User> CreateUserAsync(CreateUserDto userDto);
 
     Task UpdateUserAsync(ulong userId, UpdateUserDto userDto);
 

@@ -15,12 +15,12 @@ namespace api_my_bank_dotnet.Controllers
   {
     private DataContext context;
 
-    private LoginRepository repository;
+    private AuthenticationRepository repository;
 
     public AuthenticationController(DataContext context)
     {
       this.context = context;
-      this.repository = new LoginRepository(context);
+      this.repository = new AuthenticationRepository(context);
     }
 
     [HttpPost]

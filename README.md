@@ -1,9 +1,14 @@
 ### Rodar projeto
 ```bash
 dotnet run
+dotnet watch run
 
 # Via VS Code
 F5
+
+# Caso ocorra esse erro MySqlConnector.MySqlException... rode
+yarn dev
+yarn start
 ```
 
 ### Migrations

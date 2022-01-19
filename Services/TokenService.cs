@@ -19,7 +19,11 @@ namespace api_my_bank_dotnet.Services
       {
         // Coloque quantas claims precisar
         new Claim(ClaimTypes.Name, user.login.ToString()),
-        new Claim(ClaimTypes.NameIdentifier, user.user_id.ToString())
+        new Claim(ClaimTypes.NameIdentifier, user.user_id.ToString()),
+        new Claim(ClaimTypes.DateOfBirth, user.birth_date.ToString()),
+        new Claim(ClaimTypes.Email, user.email.ToString()),
+        new Claim(ClaimTypes.Gender, user.gender.ToString()),
+        new Claim(ClaimTypes.Surname, user.surname.ToString())
       };
 
       return _GenerateToken(claims);
@@ -87,8 +91,14 @@ namespace api_my_bank_dotnet.Services
 
     public static void SaveRefreshToken(string login, string refreshToken)
     {
+      var item = _refreshTokens.FirstOrDefault(x => x.Item1 == login);
+
+      if (item.Item1 is not null)
+      {
+        _refreshTokens.Remove(item);
+      }
+
       _refreshTokens.Add(new(login, refreshToken));
-      Console.WriteLine($"SaveRefreshToken _refreshTokens: {_refreshTokens}");
     }
 
     public static string GetRefreshToken(string login)
@@ -98,12 +108,8 @@ namespace api_my_bank_dotnet.Services
 
     public static void DeleteRefreshToken(string login, string refreshToken)
     {
-      Console.WriteLine($"DeleteRefreshToken before _refreshTokens: {_refreshTokens}");
-
       var item = _refreshTokens.FirstOrDefault(x => x.Item1 == login && x.Item2 == refreshToken);
       _refreshTokens.Remove(item); // Mesmo principio para deslogar um usuário
-
-      Console.WriteLine($"DeleteRefreshToken after _refreshTokens: {_refreshTokens}");
     }
   }
 }
