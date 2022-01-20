@@ -1,12 +1,13 @@
 using System;
 using System.Runtime.Remoting;
 using System.Threading.Tasks;
+using api_my_bank_dotnet.Repositories.Interfaces;
 using Newtonsoft.Json;
 using StackExchange.Redis;
 
 namespace api_my_bank_dotnet.Repositories
 {
-  public class RedisRepository
+  public class RedisRepository : RedisRepositoryInterface
   {
     private IConnectionMultiplexer redis;
 
