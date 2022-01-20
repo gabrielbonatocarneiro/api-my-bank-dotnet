@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using StackExchange.Redis;
 
 namespace api_my_bank_dotnet
 {
@@ -28,6 +29,9 @@ namespace api_my_bank_dotnet
 
       services.AddDbContext<DataContext>(options => options.UseMySql(mySqlConnection, ServerVersion.AutoDetect(mySqlConnection)));
       services.AddScoped<DataContext, DataContext>();
+
+      var multiplexer = ConnectionMultiplexer.Connect("localhost");
+      services.AddSingleton<IConnectionMultiplexer>(multiplexer);
 
       services.AddCors();
       services.AddControllers();
